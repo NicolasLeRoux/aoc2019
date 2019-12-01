@@ -6,7 +6,7 @@ My golang solutions to the [advent of code 2019](http://adventofcode.com/).
 
 | Days | Part 1 | Part 2 |
 |:----:|:------:|:------:|
-| [01](./days/01) | :star: | - |
+| [01](./days/01) | :star: | :star: |
 | [02](./days/02) | - | - |
 | [03](./days/03) | - | - |
 | [04](./days/04) | - | - |
