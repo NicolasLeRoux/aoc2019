@@ -65,3 +65,29 @@ func ParseIntCode(str string) []int {
 
     return slice
 }
+
+// SolvePartTwo is the main solver of the day 02 part 2 puzzle
+func SolvePartTwo(str string) int {
+    slice := ParseIntCode(str)
+    noun := 0
+    verb := 0
+
+Loop:
+    for noun = 0; noun <= 99; noun++ {
+        for verb = 0; verb <= 99; verb++ {
+            sliceCopy := make([]int, len(slice))
+            copy(sliceCopy, slice)
+
+            sliceCopy[1] = noun
+            sliceCopy[2] = verb
+
+            processed := ProcessIntCode(sliceCopy)
+
+            if processed[0] == 19690720 {
+                break Loop
+            }
+        }
+    }
+
+    return 100 * noun + verb
+}
