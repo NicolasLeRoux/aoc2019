@@ -24,11 +24,12 @@ func SolvePartOne(strs []string) int {
 }
 
 // ParseWirePath is a function to parse the wire's path
-func ParseWirePath(str string) map[string]bool {
+func ParseWirePath(str string) map[string]int {
 	paths := strings.Split(str, ",")
 	x := 0
 	y := 0
-	m := map[string]bool{"0,0": true}
+	cpt := 0
+	m := map[string]int{"0,0": 0}
 
 	for i := 0; i < len(paths); i++ {
 		path := paths[i]
@@ -53,7 +54,8 @@ func ParseWirePath(str string) map[string]bool {
 			}
 
 			key := strconv.Itoa(x) + "," + strconv.Itoa(y)
-			m[key] = true
+			cpt++
+			m[key] = cpt
 		}
 	}
 
@@ -83,4 +85,21 @@ func getMinNumber(nbs []int) int {
 	}
 
 	return min
+}
+
+// SolvePartTwo is the main solver of the day 01 part 2 puzzle
+func SolvePartTwo(strs []string) int {
+	pathWire1 := ParseWirePath(strs[0])
+	pathWire2 := ParseWirePath(strs[1])
+	intersections := []int{}
+
+	for coord, val1 := range pathWire1 {
+		val2, ok := pathWire2[coord]
+
+		if ok && coord != "0,0" {
+			intersections = append(intersections, val1+val2)
+		}
+	}
+
+	return getMinNumber(intersections)
 }
