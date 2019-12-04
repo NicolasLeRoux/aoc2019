@@ -32,4 +32,10 @@ func main() {
 	t := time.Now()
 	elapsed := t.Sub(start)
 	fmt.Printf("Answer part one: %d (%+v)\n", resultPartOne, elapsed)
+
+	start = time.Now()
+	resultPartTwo := solver.SolvePartTwo(min, max) // 299 (55.126837ms)
+	t = time.Now()
+	elapsed = t.Sub(start)
+	fmt.Printf("Answer part two: %d (%+v)\n", resultPartTwo, elapsed)
 }
