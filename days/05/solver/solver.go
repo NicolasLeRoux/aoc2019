@@ -130,10 +130,12 @@ func parseOpcode(opcode int) (int, int, int, int) {
 func getIncrementForInstruction(instruction int) int {
 	increment := 0
 
-	if instruction == 1 || instruction == 2 {
+	if instruction == 1 || instruction == 2 || instruction == 7 || instruction == 8 {
 		increment = 4
 	} else if instruction == 3 || instruction == 4 {
 		increment = 2
+	} else if instruction == 5 || instruction == 6 {
+		increment = 3
 	} else if instruction == 99 {
 		increment = 1
 	} else {
@@ -158,4 +160,130 @@ func parseIntCode(str string) []int {
 	}
 
 	return slice
+}
+
+// SolvePartTwo is the main solver of the day 05 part 2 puzzle
+func SolvePartTwo(str string, input int) []int {
+	intcodes := parseIntCode(str)
+	var outputs []int
+
+Loop:
+	for i := 0; i < len(intcodes); {
+		instruction, modeParamNb1, modeParamNb2, modeParamNb3 := parseOpcode(intcodes[i])
+
+		if instruction == 1 || instruction == 2 {
+			var leftOperand int
+
+			if modeParamNb1 == 0 {
+				leftOperandIndex := intcodes[i+1]
+				leftOperand = intcodes[leftOperandIndex]
+			} else {
+				leftOperand = intcodes[i+1]
+			}
+
+			var rightOperand int
+
+			if modeParamNb2 == 0 {
+				rightOperandIndex := intcodes[i+2]
+				rightOperand = intcodes[rightOperandIndex]
+			} else {
+				rightOperand = intcodes[i+2]
+			}
+
+			if modeParamNb3 == 0 {
+				storeIndex := intcodes[i+3]
+
+				if instruction == 1 {
+					intcodes[storeIndex] = leftOperand + rightOperand
+				} else {
+					intcodes[storeIndex] = leftOperand * rightOperand
+				}
+			} else {
+				if instruction == 1 {
+					intcodes[i+3] = leftOperand + rightOperand
+				} else {
+					intcodes[i+3] = leftOperand * rightOperand
+				}
+			}
+		} else if instruction == 3 {
+			if modeParamNb1 == 0 {
+				parameterIndex := intcodes[i+1]
+				intcodes[parameterIndex] = input
+			} else {
+				intcodes[i+1] = input
+			}
+		} else if instruction == 4 {
+			if modeParamNb1 == 0 {
+				parameterIndex := intcodes[i+1]
+				outputs = append(outputs, intcodes[parameterIndex])
+			} else {
+				outputs = append(outputs, intcodes[i+1])
+			}
+		} else if instruction == 5 || instruction == 6 {
+			var leftOperand int
+
+			if modeParamNb1 == 0 {
+				leftOperandIndex := intcodes[i+1]
+				leftOperand = intcodes[leftOperandIndex]
+			} else {
+				leftOperand = intcodes[i+1]
+			}
+
+			var rightOperand int
+
+			if modeParamNb2 == 0 {
+				rightOperandIndex := intcodes[i+2]
+				rightOperand = intcodes[rightOperandIndex]
+			} else {
+				rightOperand = intcodes[i+2]
+			}
+
+			if leftOperand != 0 && instruction == 5 || leftOperand == 0 && instruction == 6 {
+				i = rightOperand
+				continue
+			}
+		} else if instruction == 7 || instruction == 8 {
+			var param1 int
+
+			if modeParamNb1 == 0 {
+				param1Index := intcodes[i+1]
+				param1 = intcodes[param1Index]
+			} else {
+				param1 = intcodes[i+1]
+			}
+
+			var param2 int
+
+			if modeParamNb2 == 0 {
+				param2Index := intcodes[i+2]
+				param2 = intcodes[param2Index]
+			} else {
+				param2 = intcodes[i+2]
+			}
+
+			var param3 int
+
+			if modeParamNb3 == 0 {
+				//param3Index := intcodes[i+3]
+				//param3 = intcodes[param3Index]
+				param3 = intcodes[i+3]
+			} else {
+				param3 = intcodes[i+3]
+			}
+
+			if param1 < param2 && instruction == 7 || param1 == param2 && instruction == 8 {
+				intcodes[param3] = 1
+			} else {
+				intcodes[param3] = 0
+			}
+		} else if instruction == 99 {
+			break Loop
+		} else {
+			panic("Unknow instruction!")
+		}
+
+		i = i + getIncrementForInstruction(instruction)
+	}
+
+	return outputs
 }
