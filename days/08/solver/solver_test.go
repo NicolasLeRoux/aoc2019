@@ -89,3 +89,30 @@ func TestExtractDigitsFromLayer(t *testing.T) {
 		})
 	}
 }
+
+func TestSolvePartTwo(t *testing.T) {
+	suites := []struct {
+		description string
+		input1      int
+		input2      int
+		input3      string
+		expected    string
+	}{
+		{"Should return the expected value.", 2, 2, "0222112222120000", "0110"},
+	}
+
+	for _, suite := range suites {
+		t.Run(suite.description, func(t *testing.T) {
+			output := SolvePartTwo(suite.input1, suite.input2, suite.input3)
+
+			if output != suite.expected {
+				t.Errorf("TestSolvePartTwo(%d, %d, %s) got %v but expect %v",
+					suite.input1,
+					suite.input2,
+					suite.input3,
+					output,
+					suite.expected)
+			}
+		})
+	}
+}

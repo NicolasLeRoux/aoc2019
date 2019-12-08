@@ -23,4 +23,11 @@ func main() {
 	t := time.Now()
 	elapsed := t.Sub(start)
 	fmt.Printf("Answer part one: %d (%+v)\n", resultPartOne, elapsed)
+
+	start = time.Now()
+	resultPartTwo := solver.SolvePartTwo(25, 6, strs[0]) // 100...100 (142.463µs)
+	t = time.Now()
+	elapsed = t.Sub(start)
+	fmt.Printf("Answer part two: %s (%+v)\n", resultPartTwo, elapsed)
+	solver.FormatImg(25, 6, resultPartTwo)
 }

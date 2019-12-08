@@ -1,7 +1,9 @@
 package solver
 
 import (
+	"fmt"
 	"math"
+	"strings"
 )
 
 // SolvePartOne is the main solver of the day 08 part 1 puzzle
@@ -54,4 +56,39 @@ func extractDigitsFromLayer(layer string) (int, int, int) {
 	}
 
 	return nbDigit0, nbDigit1, nbDigit2
+}
+
+// SolvePartTwo is the main solver of the day 08 part 2 puzzle
+func SolvePartTwo(width int, height int, str string) string {
+	layers := extractLayers(width, height, str)
+	img := strings.Split(layers[0], "")
+
+	for i := 1; i < len(layers); i++ {
+		for j := 0; j < len(layers[i]); j++ {
+			pixel := string(layers[i][j])
+			if img[j] == "2" {
+				img[j] = pixel
+			}
+		}
+	}
+
+	return strings.Join(img[:], "")
+}
+
+// FormatImg is a formater to display an image
+func FormatImg(width int, height int, str string) {
+	fmt.Printf("\n")
+
+	for i := 0; i < height; i++ {
+		for j := 0; j < width; j++ {
+			pixel := string(str[i*width+j])
+
+			if pixel == "1" {
+				fmt.Printf("#")
+			} else {
+				fmt.Printf(" ")
+			}
+		}
+		fmt.Printf("\n")
+	}
 }
