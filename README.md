@@ -10,10 +10,10 @@ My golang solutions to the [advent of code 2019](http://adventofcode.com/).
 | [02](./days/02) | :star: | :star: |
 | [03](./days/03) | :star: | :star: |
 | [04](./days/04) | :star: | :star: |
-| [05](./days/05) | - | - |
-| [06](./days/06) | - | - |
-| [07](./days/07) | - | - |
-| [08](./days/08) | - | - |
+| [05](./days/05) | :star: | :star: |
+| [06](./days/06) | :star: | :star: |
+| [07](./days/07) | :star: | - |
+| [08](./days/08) | :star: | :star: |
 | [09](./days/09) | - | - |
 | [10](./days/10) | - | - |
 | [11](./days/11) | - | - |
